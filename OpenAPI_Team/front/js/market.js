@@ -1,4 +1,4 @@
-const serverUrl = 'http://localhost:6666/maket/search';
+const serverUrl = 'http://localhost:7778/maket';
 const apiUrl = 'https://smart.incheon.go.kr/server/rest/services/Hosted/전통시장/FeatureServer/47/query?where=1%3D1&outFields=*&outSR=4326&f=json'
 
 // function init(){
