@@ -24,6 +24,14 @@ const port = process.env.PORT || 7778;
 const app = express();
 const datatRouter = require('./dataRouter.js');
 
+
+app.use(express.static(path.join(__dirname, 'Test'))); /* 서버에서 정적 파일을 서빙하려면 express.static으로 정적 파일 경로를 설정해야 한다. 
+                                                           그러므로 express.static 미들웨어를 추가한다. 
+                                                        */
+app.use(express.static(path.join(__dirname, 'front'))); //imarket.html을 가져오기 위해 서버에서 정적 파일을 제공해야함
+
+
+
 app.use('/markets', datatRouter); //이게 라우터에서는 '/' 가 되는 것이다. 
                                 /* 라우팅 경로의 동작 방식
                                    app.use('/markets', dataRouter)의 의미 : 이는 /markets 경로에 대한 요청을 dataRouter에서 정의한 라우터로 위임한다는 의미이다.
@@ -39,10 +47,6 @@ app.use('/markets', datatRouter); //이게 라우터에서는 '/' 가 되는 것
                     -> app.use('/markets', dataRouter)는 /markets로 들어오는 요청을 dataRouter로 처리하도록 설정한 것.
                        요청을 받는 입장에서(라우터 코드) / = /markets 인것이다. 
                                 */
-app.use(express.static(path.join(__dirname, 'Test'))); /* 서버에서 정적 파일을 서빙하려면 express.static으로 정적 파일 경로를 설정해야 한다. 
-                                                           그러므로 express.static 미들웨어를 추가한다. 
-                                                        */
-
 app.listen(port, ()=>{
     console.log(`http://localhost:${port}`);
 })
