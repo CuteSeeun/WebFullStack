@@ -33,18 +33,16 @@
 
 
 
-
         /* 검색창을 중앙에 배치하기 위한 스타일 */
         .search-container {
             display: flex;
             justify-content: center;
+            align-items: center; /* 세로 중앙 정렬 */
             flex-grow: 1; /* 중앙에 여유 공간을 확보 */
         }
         .input-group {
-            width: 50%; /* 검색창 너비를 적절히 설정 */
+            width: 100%; /* 검색창 너비를 적절히 설정 */
         }
-
-
 
 
 
@@ -56,11 +54,33 @@
         } */
 
         /* 검색창이 네비게이션 바 안에 배치된 경우 간격 조정 */
-        
         .navbar-custom .search-container {
             margin-left: auto;
             margin-right: auto;
         }
+ 
+        /* navbar-brand의 글씨 크기 줄이기 */
+    .navbar-brand {
+        font-size: 14px; /* 글씨 크기를 줄이기 위해 이 값을 조정 */
+    }
+
+    
+
+  /* 네비게이션 바의 드롭다운 */
+    /* 드롭다운 메뉴 스타일 추가 (드롭다운 메뉴 숨기기) */
+    .dropdown-menu {
+            display: none; /* 기본적으로 메뉴는 숨김 */
+            position: absolute; /* 메뉴의 위치를 상대적으로 설정 */
+            background-color: white; /* 메뉴 배경 색상 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* 그림자 추가 */
+        }
+
+        /* 마우스를 가져다 댔을 때 드롭다운 메뉴가 표시되도록 설정 */
+        .nav-item:hover .dropdown-menu {
+            display: block; /* 메뉴 보이기 */
+        }
+
+
 
 
     </style>
@@ -78,8 +98,10 @@
 
     <!-- 네비게이션 바 -->
     <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container-fluid">
+        <div class="container-fluid d-flex flex-column">   <!-- 이 부분을 수정-->
             <a class="navbar-brand" href="#">이 사이트는 수도권의 공공 데이터를 제공하는 포털입니다</a>
+
+            <div class="d-flex justify-content-between align-items-center w-100">
             <a class="navbar-brand" href="#">
               <img src="/public/img/Logo (3).jpg" alt="공공데이터 포털 로고" style="width: 100px; vertical-align: middle;">
           </a>
@@ -103,17 +125,50 @@
             <!-- 네비게이션 링크 -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/front/imarket.html">서울</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active" >서울</a>
+                        <!-- <a class="nav-link active" aria-current="page">서울</a> -->
+
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">서울 정보 1</a></li>
+                            <li><a class="dropdown-item" href="#">서울 정보 2</a></li>
+                        </ul>
+
+
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item dropdown">
                         <a class="nav-link" href="#">경기</a>
+
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">경기 정보 1</a></li>
+                            <li><a class="dropdown-item" href="#">경기 정보 2</a></li>
+                        </ul>
+
+
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">인천</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="/front/imarket.html">인천</a>
+
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">전통 시장</a></li>
+                            <li><a class="dropdown-item" href="#">인천 정보 2</a></li>
+                        </ul>
+
+
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item dropdown">
                         <a class="nav-link" href="#">문의</a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">문의 정보 1</a></li>
+                            <li><a class="dropdown-item" href="#">문의 정보 2</a></li>
+                        </ul>
+
+
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">로그인</a>

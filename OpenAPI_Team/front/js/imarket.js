@@ -1,49 +1,65 @@
-const serverUrl = 'http://localhost:7778/maket';
-const apiUrl = 'https://smart.incheon.go.kr/server/rest/services/Hosted/전통시장/FeatureServer/47/query?where=1%3D1&outFields=*&outSR=4326&f=json'
 
-// function init(){
-//     const url = `${baseUrl}?`;
-// }
 
-// 데이터를 가져와서 시장 목록을 표시하는 함수
-async function fetchMarketData() {
+
+
+
+
+
+
+// const axios = require('axios'); //Node.js 환경에서 사용하는 require 제거
+// const baseUrl = `http://localhost:7778`;
+
+const showData = async () => {
     try {
         // API로부터 데이터 가져오기
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        const markets = data.features; // 시장 정보 목록
+        const response = await axios.get('http://localhost:7778/markets');// const response = await fetch(apiUrl);
+        // const data = await response.json();
+        const data = response.data; //서버에서 html 형태로 응답을 줌 (서버에서 이미 처리함)
 
-        // HTML 요소 선택
+        console.log(data);
+
+
+        // 가져온 HTML을 그대로 페이지에 삽입
         const marketListDiv = document.getElementById('market-list');
-        
-        // 시장 정보를 나열
-        markets.forEach(market => {
-            const { name, tel, addr } = market.attributes; // 필요한 속성 추출
+        marketListDiv.innerHTML = data; // 서버에서 받은 HTML을 바로 삽입
 
-            // 새로운 div 요소 생성 및 시장 정보 추가
-            const marketItem = document.createElement('div');
-            marketItem.innerHTML = `
-                <h3>${name}</h3>
-                <p>전화번호: ${tel}</p>
-                <p>주소: ${addr}</p>
-                <hr>
-            `;
-
-            // market-list div에 추가
-            marketListDiv.appendChild(marketItem);
-
-            console.log(name, tel, addr);
-            
-        });
-        
-        
+        // const markets = data.features; // 시장 정보 목록
+        // renderData(markets);
     } catch (error) {
-        console.error('데이터 가져오기 실패:', error);
-        document.getElementById('market-list').textContent = '데이터를 가져오는 중 오류가 발생했습니다.';
+        console.log(error);
     }
 }
 
-// 페이지 로드 시 데이터를 가져와서 화면에 표시
-window.onload = fetchMarketData;
+// function renderData (markets){
+//     // HTML 요소 선택
+//     const marketListDiv = document.getElementById('market-list');
+//     // 시장 정보를 나열
+//     markets.forEach(market => {
+//         const { name, tel, addr } = market.attributes; // 필요한 속성 추출
 
-fetchMarketData();
+//         // 새로운 div 요소 생성 및 시장 정보 추가
+//         const marketItem = document.createElement('div');
+//         marketItem.innerHTML = `
+//             <h3>${name}</h3>
+//             <p>전화번호: ${tel}</p>
+//             <p>주소: ${addr}</p>
+//             <hr>
+//         `;
+
+//         // market-list div에 추가
+//         marketListDiv.appendChild(marketItem);
+//         console.log(name, tel, addr);
+//     });
+// }
+
+// export {showData}; 
+
+//페이지 로드 시 데이터를 가져와서 화면에 표시
+window.onload = showData;
+
+
+
+
+
+
+

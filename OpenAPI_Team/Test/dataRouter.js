@@ -32,11 +32,9 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-router.get("/", (req, res) => {
-    res.send('<a href="/markets/search"> 전통시장 검색</a>');
-  });
-
-router.get('/search', async (req, res) => {
+/*
+router.get("/", async (req, res) => {
+    // 
     try {
         let encode=encodeURI('전통시장')
         const apiUrl = `https://smart.incheon.go.kr/server/rest/services/Hosted/${encode}/FeatureServer/47/query?where=1%3D1&outFields=*&outSR=4326&f=json`
@@ -62,6 +60,189 @@ router.get('/search', async (req, res) => {
     } catch (error) {
         console.log(error);        
     }
+
+  });
+*/
+
+
+router.get("/", async (req, res) => {
+    try {
+        let encode = encodeURI('전통시장');
+        const apiUrl = `https://smart.incheon.go.kr/server/rest/services/Hosted/${encode}/FeatureServer/47/query?where=1%3D1&outFields=*&outSR=4326&f=json`;
+        const response = await axios.get(apiUrl);
+        const markets = await response.data.features;
+
+
+
+        // 페이지네이션 처리
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const paginatedMarkets = markets.slice(startIndex, endIndex);
+
+
+
+
+
+        let html = `
+            <html>
+                <body>
+                    <h1>전통시장 목록</h1>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>시장 이름</th>
+                                <th>전화번호</th>
+                                <th>주소</th>
+                                <th>상세보기</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">`;
+
+        paginatedMarkets.forEach((market, idx) => {
+            const { name, tel, addr, roadaddr, hmpg_addr } = market.attributes;
+            // html += `
+            //     <tr>
+            //         <td>${idx + 1}</td>
+            //         <td>${name || '#확인필요'}</td>
+            //         <td>${tel || '#확인필요'}</td>
+            //         <td>${addr || '#확인필요'}</td>
+            //         <td>
+            //             <button class="seebtn"
+            //                 data-name="${name || '#확인필요'}"
+            //                 data-tel="${tel || '#확인필요'}"
+            //                 data-roadaddr="${roadaddr || '#확인필요'}"
+            //                 data-hmpg_addr="${hmpg_addr || '#확인필요'}">
+            //                 상세보기
+            //             </button>
+            //         </td>
+            //     </tr>`;
+
+            html += `
+                <tr>
+                    <td>${startIndex + idx + 1}</td>
+                    <td>${name || '#확인필요'}</td>
+                    <td>${tel || '#확인필요'}</td>
+                    <td>${addr || '#확인필요'}</td>
+                    <td>
+                        <button class="seebtn"
+                            data-name="${name || '#확인필요'}"
+                            data-tel="${tel || '#확인필요'}"
+                            data-roadaddr="${roadaddr || '#확인필요'}"
+                            data-hmpg_addr="${hmpg_addr || '#확인필요'}">
+                            상세보기
+                        </button>
+                    </td>
+                </tr>`;
+        });
+
+
+        html += `</tbody></table>`;
+        // 페이지네이션 버튼 생성
+        const totalPages = Math.ceil(markets.length / limit);
+        html += `<div id="pagination">`;
+        for (let i = 1; i <= totalPages; i++) {
+            html += `<button onclick="changePage(${i})">${i}</button>`;
+        }
+        html += `</div>`;
+
+
+
+
+
+
+
+
+        // html += `
+        //                 </tbody>
+        //             </table>
+        //             <div class="popup" style="display:none;">
+        //                 <div class="popup-content">
+        //                     <h3>상세 정보</h3>
+        //                     <p id="popup-details"></p>
+        //                     <button class="closebtn">닫기</button>
+        //                 </div>
+        //             </div>
+        //             <script>
+        //                 // 팝업 기능
+        //                 document.addEventListener('click', function(e) {
+        //                     if (e.target && e.target.classList.contains('seebtn')) {
+        //                         const name = e.target.getAttribute('data-name');
+        //                         const tel = e.target.getAttribute('data-tel');
+        //                         const roadaddr = e.target.getAttribute('data-roadaddr');
+        //                         const hmpg_addr = e.target.getAttribute('data-hmpg_addr');
+        //                         document.getElementById('popup-details').innerHTML = 
+        //                             '<strong>이름:</strong> ' + name + '<br>' +
+        //                             '<strong>전화번호:</strong> ' + tel + '<br>' +
+        //                             '<strong>주소:</strong> ' + roadaddr + '<br>' +
+        //                             '<strong>홈페이지:</strong> ' + hmpg_addr;
+        //                         document.querySelector('.popup').style.display = 'block';
+        //                     }
+        //                 });
+
+        //                 // 팝업 닫기 기능
+        //                 document.querySelector('.popup .closebtn').addEventListener('click', function() {
+        //                     document.querySelector('.popup').style.display = 'none';
+        //                 });
+        //             </script>
+        //         </body>
+        //     </html>`;
+
+
+
+
+
+        // 팝업 기능 스크립트 추가
+        html += `
+            <div class="popup" style="display:none;">
+                <div class="popup-content">
+                    <h3>상세 정보</h3>
+                    <p id="popup-details"></p>
+                    <button class="closebtn">닫기</button>
+                </div>
+            </div>
+            <script>
+                function changePage(page) {
+                    window.location.href = "?page=" + page + "&limit=${limit}";
+                }
+
+                // 팝업 기능
+                document.addEventListener('click', function(e) {
+                    if (e.target && e.target.classList.contains('seebtn')) {
+                        const name = e.target.getAttribute('data-name');
+                        const tel = e.target.getAttribute('data-tel');
+                        const roadaddr = e.target.getAttribute('data-roadaddr');
+                        const hmpg_addr = e.target.getAttribute('data-hmpg_addr');
+                        document.getElementById('popup-details').innerHTML = 
+                            '<strong>이름:</strong> ' + name + '<br>' +
+                            '<strong>전화번호:</strong> ' + tel + '<br>' +
+                            '<strong>주소:</strong> ' + roadaddr + '<br>' +
+                            '<strong>홈페이지:</strong> ' + hmpg_addr;
+                        document.querySelector('.popup').style.display = 'block';
+                    }
+                });
+
+                // 팝업 닫기 기능
+                document.querySelector('.popup .closebtn').addEventListener('click', function() {
+                    document.querySelector('.popup').style.display = 'none';
+                });
+            </script>
+        </body>
+        </html>`;
+
+
+
+
+
+
+        res.send(html);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('데이터 가져오기 실패');
+    }
 });
+
 
 module.exports = router;

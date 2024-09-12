@@ -24,7 +24,7 @@ const port = process.env.PORT || 7778;
 const app = express();
 const datatRouter = require('./dataRouter.js');
 
-
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'Test'))); /* 서버에서 정적 파일을 서빙하려면 express.static으로 정적 파일 경로를 설정해야 한다. 
                                                            그러므로 express.static 미들웨어를 추가한다. 
                                                         */
