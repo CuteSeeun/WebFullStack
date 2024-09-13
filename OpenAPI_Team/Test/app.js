@@ -47,6 +47,7 @@ app.use('/markets', datatRouter); //이게 라우터에서는 '/' 가 되는 것
                     -> app.use('/markets', dataRouter)는 /markets로 들어오는 요청을 dataRouter로 처리하도록 설정한 것.
                        요청을 받는 입장에서(라우터 코드) / = /markets 인것이다. 
                                 */
+
 app.listen(port, ()=>{
     console.log(`http://localhost:${port}`);
 })
