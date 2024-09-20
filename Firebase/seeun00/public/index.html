@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Firebase Hosting</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Firebase Hosting</title>
+
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/10.13.2/firebase-app-compat.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/10.13.2/firebase-auth-compat.js"></script>
+  <script defer src="/__/firebase/10.13.2/firebase-database-compat.js"></script>
+  <script defer src="/__/firebase/10.13.2/firebase-firestore-compat.js"></script>
+  <script defer src="/__/firebase/10.13.2/firebase-functions-compat.js"></script>
+  <script defer src="/__/firebase/10.13.2/firebase-messaging-compat.js"></script>
+  <script defer src="/__/firebase/10.13.2/firebase-storage-compat.js"></script>
+  <script defer src="/__/firebase/10.13.2/firebase-analytics-compat.js"></script>
+  <script defer src="/__/firebase/10.13.2/firebase-remote-config-compat.js"></script>
+  <script defer src="/__/firebase/10.13.2/firebase-performance-compat.js"></script>
+  <!-- 
+   initialize the SDK after all desired features are loaded, set useEmulator to false
+   to avoid connecting the SDK to running emulators.
+ -->
+  <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+</head>
+
+<body>
+  <h1>사원 관리 목록</h1>
+  name: <input type="text" name="name" id="name" value="kim" /><br />
+  dept: <input type="text" name="name" id="dept" value="관리부" /><br />
+  email: <input type="text" name="name" id="email" value="너린@gmail.com" /><br />
+  job: <input type="text" name="name" id="job" value="사장" /><br />
+  <button id="insertBtn">저장하기</button>
+  <hr />
+  <li id="userList">
+  
+  </li>
+
+
+  <script>
+    //deleteUser 함수: Firestore와 HTML에서 데이터 삭제
+    function deleteUser(btn) {
+      console.log(">>> deleteUser click ... btn id: ", btn.dataset.id);
+      //firestore에서 데이터 삭제
+        //버튼의 data-id 속성에서 유저의 firestore 문서 id를 가져옴 
+        let userId = btn.dataset.id;
+        //firestore에서 해당 유저 삭제 
+        db.collection("users").doc(userId).delete().then(() => {
+          console.log("User successfully deleted!");
+        // Firestore에서 삭제가 완료되면 HTML에서도 해당 항목을 삭제
+          btn.parentElement.remove(); // 클릭된 버튼의 부모 요소인 <li> 태그를 삭제
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
+    }
+
+
+    let db;
+    document.addEventListener('DOMContentLoaded', function () {
+      try {
+        const app = firebase.app();
+        db = firebase.firestore(); //전역 변수 db에 firestore 객체 할당 
+        const storage = firebase.storage();
+        console.log(app);
+        console.log(db);
+        console.log(storage);
+
+        var userList = [];
+
+        //DB에서 유저 목록을 가져오는 함수
+        function selectAll() {
+          db.collection("users").get().then((querySnapshot) => {
+            let userList = [];
+            querySnapshot.forEach((doc) => { //doc가 하나의 유저임
+              let userData = doc.data();
+              userData.id = doc.id; //firestore 문서 id를 저장
+              userList.push(userData);
+            });
+            //promise 순서 중요 - 실행순서 (비동기 부분에서 흐름 제어)
+            drawList(userList);
+          });
+        }
+        selectAll();
+
+
+        //유저 목록을 html에 그리는 함수
+        function drawList(userList) {
+          var html = ""; //변수 초기화
+          for (var i = 0; i < userList.length; i++) { //근데 꼭 var로 써야 하는가?
+              let user = userList[i];
+              html += `<li>${user.name} | ${user.email} | ${user.dept}
+                       <button data-id="${user.id}" 
+                       onclick="deleteUser(this)">Delete</button></li>`;
+            //여기서 인라인으로 함수 호출
+            //${user.id}로 하면 데이터셋에서 찾을 수 있다
+          }
+          document.querySelector("#userList").innerHTML = html;
+        }
+
+
+        //이 부분은 디비에 데이터 넣는 코드이다
+        //디비에 데이터 넣는 함수
+        function insertUser(newData){
+          db.collection("users").add(newData).then((docRef) => {
+            selectAll();//추가 후 목록 갱신
+          })
+            .catch((error) => {
+              console.error("Error adding document: ", error);
+            });
+        }
+
+        document.getElementById("insertBtn").onclick = function () {
+          let newData = {
+            dept: document.getElementById("dept").value,
+            email: document.getElementById("email").value,
+            job: document.getElementById("job").value,
+            name: document.getElementById("name").value
+          } // 이 부분은 입력받도록 해보자 -> input으로
+          console.log(newData);
+          insertUser(newData);
+        }
+
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  </script>
+
+
+  <script type="module">
+    var firebaseConfig = {
+      apiKey: "AIzaSyDDcxfN84pRnCNKp_NwUxVE9NOzIRhB-vc",
+      authDomain: "open-api-curd.firebaseapp.com",
+      projectId: "open-api-curd",
+      storageBucket: "open-api-curd.appspot.com",
+      messagingSenderId: "863443979957",
+      appId: "1:863443979957:web:b9d974ff747c065c1d78fc"
+    };
+    firebase.initializeApp(firebaseConfig); //객체에 대해서 초기화
+  </script>
+</body>
+
+</html>
