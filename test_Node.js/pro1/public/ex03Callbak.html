@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            border: 1px solid red;
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            text-align: center;
+            line-height: 100px;
+            position: relative;
+            left: 400px;
+            top: 200px;
+            /* transition: left 0.5s e; */
+        }
+    </style>
+</head>
+<body>
+    <h1>hello world</h1>
+    <button id="moveBtn">move</button>
+    <div id="box">20:80</div>    
+
+    <script>
+
+        const moveBtn = document.querySelector("#moveBtn");
+        const box = document.querySelector("#box");
+        //DOM 참조 확인
+        console.dir(moveBtn);
+        console.dir(box);
+
+        //변수 선언 및 초기화
+        //var는 윈도우의 멤버 속성으로 등록, let은 지역성이다.
+        //var는 
+        var aname = 0;
+        let aname2 = "hello"; 
+        var aname3 = 0;
+
+        console.dir(window);
+        moveBtn.addEventListener("click", function(){
+            aname += 30;
+            box.style.left = aname + "px";
+        }, false);
+    </script>
+</body>
+</html>

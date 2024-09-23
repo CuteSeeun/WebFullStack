@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            border: 1px solid red;
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            text-align: center;
+            line-height: 100px;
+            position: relative;
+            left: 400px;
+            top: 200px;
+            transition: left 0.5s e;
+        }
+    </style>
+</head>
+<body>
+    <h1>hello world</h1>
+    <button id="moveBtn">left</button>
+    <div id="box">20:80</div>    
+
+    <script>
+
+        //선생님
+        const moveBtn = document.querySelector("#moveBtn");
+        const box = document.querySelector("#box");
+           //DOM 참조 확인
+        console.dir(moveBtn);
+        console.dir(box);
+
+        //onclick은 한개만 넣을 수 있는데 addEventListener는 여러 개 넣을 수 있따
+        //에드 리스너는 콜백함수를 받는다.
+        moveBtn.addEventListener("click", function(){
+            moveBtn.innerText = "move";
+            box.style.backgroundColor = "pink";
+            box.style.left = 400 + "px";
+        }, false);
+    </script>
+</body>
+</html>

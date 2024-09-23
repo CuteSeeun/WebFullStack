@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            border: 1px solid red;
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            text-align: center;
+            line-height: 100px;
+            position: relative;
+            left: 400px;
+            top: 200px;
+            /* transition: left 0.5s e; */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>hello world</h1>
+    <button id="moveBtn">이동</button>
+    <div id="box" class="box">20:80</div>
+    <div id="box1" class="box">20:80</div>
+    <div id="box2" class="box">20:80</div>
+<!-- css에서 #box{}로 했을 땐 class 안썼엇음. 여러 개 하려고 그런건가? -->
+
+    <script>
+        const moveBtn = document.querySelector("#moveBtn");
+        const box = document.querySelector("#box");
+        //DOM 참조 확인
+        console.dir(moveBtn);
+        console.dir(box);
+
+        function moveElement(selector, speed, targetX, callback) {
+            const box = document.querySelector(selector);
+            let aname = 10;
+            var intervalRef = setInterval(function (){
+                aname += 10;
+                box.style.left = aname + "px";
+
+                box.callback = callback; // <- 쌤, 객체 안에 콜백 넣기
+
+                if (aname >= targetX) {
+                    clearInterval(intervalRef);
+                    box.style.left = targetX + "px"; //끝나는 시점 정해서 넘어가면 정해놓음 시점으로 위치 되돌리기 
+                    // callback();//이는 box를 참조
+                    console.log(callback);
+                    
+                    // callback.call(box);  <- 내가 한거, this를 콜백에 바인딩하기
+
+                    box.callback(); // <- 쌤, 객체 안에 콜백 넣기
+                    
+                }
+
+            }, 20);
+        }
+
+        moveBtn.addEventListener('click', function(){   
+            //moveElement에서 callback 함수 사용
+            moveElement('#box', 1, 300, function(){
+                                            alert('동작 완료'); 
+                                            // box.style.backgroundColor="orange";//박스를 직접 참조
+                                            alert(this);//this=오브젝트 윈도우
+                                            console.log(this);
+
+                                            // this.style.backgroundColor="orange"; <- 내가 한거
+
+                                            //콜백 안에서 박스가 된거다
+                                            box.callback(); //쌤, 객체 안에 콜백 넣기 즉 콜백 함수가 박스의 소속이 되도록 한거
+
+                                            });
+            moveElement('#box1', 1, 200, function(){console.log('완')});
+            moveElement('#box2', 1, 400, function(){console.log('완')});
+        });
+    </script>
+</body>
+
+</html>
