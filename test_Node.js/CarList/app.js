@@ -57,7 +57,7 @@ router.route("/car/input")
 //상세 보기
 router.route("/car/detail")
 .get((req, res)=>{
-    const index = carList.findIndex(()=>{
+    const index = carList.findIndex((car)=>{
         //car는 숫자가 아니고 객체임
         return car._id == req.query._id; //이게 동일한게 있는 위치
     });
@@ -76,21 +76,48 @@ router.route("/car/detail")
 //수정
 router.route("/car/modify")
 .get((req, res)=>{
-    req.app.render('car/modify', {}, (err, html)=>{
-        if(err) throw err;
-        res.end(html);
+    const index = carList.findIndex((car)=>{
+        return car._id == req.query._id;
     });
+    if(index != -1) {
+        req.app.render('car/modify',{car: carList[index]}, (err, html) => {
+            if (err) throw err;
+            res.end(html);
+        });
+    } else {
+        console.log("해당 요소를 찾을 수 없습니다!");
+        res.redirect("/car/list");
+    }
 })
-.post();
+.post((req, res)=>{
+    const index = carList.findIndex((car)=>{
+        return car._id == req.body._id;
+    });
+    if(index != -1) {
+        const newCar = {
+            _id: req.body._id,
+            name: req.body.name,
+            price: req.body.price,
+            company: req.body.company,
+            year: req.body.year
+        }
+        carList[index] = newCar;
+    }
+    res.redirect("/car/list");
+});
+
 //삭제
 router.route("/car/delete")
 .get((req, res)=>{
-    req.app.render('car/delete', {}, (err, html)=>{
-        if(err) throw err;
-        res.end(html);
+    const index = carList.findIndex((car)=>{
+        return car._id == req.query._id;
     });
+    if(index != -1) {
+        carList.splice(index, 1);
+    }
+    res.redirect("/car/list");
 })
-.post();
+
 
 //모든 라우터 설정이 완료된 후에 미들웨어 등록해야 함.
 app.use('/', router);
