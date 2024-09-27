@@ -2,17 +2,14 @@ import { useState } from "react";
 import LiComponent from "./LiComponent";
 
 const Container = () => {
-    const [newTodo, setNewTodo] = useState(""); //새로운 할 일의 텍스트
-
     let listArray = [
         {_id:"1", title:"춥다고", done:false},
         {_id:"2", title:"열라면 땡겨", done:false},
         {_id:"3", title:"프로젝트 완성", done:false},
         {_id:"4", title:"파이널", done:false}
     ];
-
+    const [newTodo, setNewTodo] = useState(""); //새로운 할 일의 텍스트
     const [todoList, setTodoList] = useState(listArray); //할 일 목록
-    // let todo_id = 5;
     const [todoId, setTodoId] = useState(5); //할 일의 고유한 _id
 
     const buttonHandler = (e) => {
@@ -36,6 +33,55 @@ const Container = () => {
             //배열에 추가 후 state 초기화
             setNewTodo("");
     }
+
+
+    const [current, setCurrent] = useState(""); //리스트 항목의 title 선택 시 현재 값
+    const [selectTodo, setSelectTodo] = useState({}); //어떤 항목이 선택되엇는가 알기 위해 만듦
+    const editHandler = (e)=>{ //이벤트 핸들러는 이벤트 객체가 자동으로 생긴다 그래도 그게 표준은 아니니깐 이벤트를 담을 수 있는 변수 만들기
+        //수정 완료 및 적용 기능
+        console.log("editHandler()-Container : ", current);
+        console.dir(selectTodo); //어떤 항목이 선택되엇는가 알기 위해 만듦
+
+        //-----------------------------------
+        //선생님
+        //selectTodo에서 _id 참조해서 todoList의 어느 항목인지 찾기
+        //todoList 복제
+        //복제 후 새 title로 변경
+        //todoList state를 변경(적용, 리렌더링)
+        // const idx = todoList.findIndex((todo)=>selectTodo._Id === todo._id);
+        // if(idx !== -1){
+        //     const newList = [...todoList];
+        //     newList[idx].title = current;
+        //     setTodoList(newList);
+        //     setCurrent("");
+        // }
+
+
+        //나
+        const updateTitle = todoList.map((todo)=>{
+            if(todo._id === selectTodo._id){
+                return {...todo, title:current};
+            }
+            else{return todo};
+        })
+             //map 함수
+             //todoList.map은 todoList 배열의 각 todo 객체에 대해 콜백 함수를 실행합니다.
+             //각 todo는 현재 순회 중인 할 일 객체입니다.
+        setTodoList(updateTitle); //항목에 새 타이틀 적용
+        // setSelectTodo({}); //
+        setCurrent(""); //초기화
+    }
+
+    const editTitle = (curTodo)=>{ //여기에는 todo가 올라오던가 아님 해당 요소의 id 혹은 title이 올라오든가 해야 한다
+                                 //이 함수는 LiComponent에 넘겨야 한다.
+        console.log("editTitle()이 호출됨 - Container가 속해있고", curTodo); //그럼 curTodo는 각 항목이다
+        //todoList의 title을 선택하면 작동하는 기능
+        
+        setCurrent(curTodo.title);
+        setSelectTodo(curTodo); //화면에 변화를 줘야 하는 일은 없기에 state로 해야 할 필요가 없다. 그러나 위에서 state로 저장하기에
+                             //이 변수는 초기화가 된다. 그래서 state로 만들자
+    }
+
     
     // const deleteHandler = (e)=>{
     //     //내용 복제
@@ -100,21 +146,29 @@ const Container = () => {
     function makeElements(){
         return todoList.map((todo)=>{
             return ( <LiComponent key={todo._id} todo={todo} todoList={todoList} 
+                                  editTitle={editTitle}
                                   toggleTodo = {toggleTodo}  setTodoList={setTodoList} />);
         });
     }
 
     return (
         <div className="container" style={{ marginTop: "30px" }}>
-            <h3>할일 입력</h3>
             <p>
-                <input type="text" value={newTodo} onChange={(e)=>{//state를 변경하면 변경된 내용이 input에 반영(setter를 이용해 변경)
+                <h5>입력</h5>
+                    <input type="text" value={newTodo} onChange={(e)=>{//state를 변경하면 변경된 내용이 input에 반영(setter를 이용해 변경)
                                                                      setNewTodo(e.target.value);}} />
-                <button onClick={buttonHandler}>저장</button>
+                    <button onClick={buttonHandler}>저장</button>
+                <hr />
+            </p>
+            <p>
+                <h5>수정</h5>
+                <input type="text" value={current} onChange={(e)=>{ setCurrent(e.target.value);}} />
+                <button onClick={editHandler}>수정</button>
+                
             </p>
             <hr />
 
-            <h3>할일 목록</h3>
+            <h5>할일 목록</h5>
             <ul>{ makeElements()}</ul>
         </div>
     );

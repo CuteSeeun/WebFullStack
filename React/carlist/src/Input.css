@@ -1,0 +1,9 @@
+.input-group {
+    background-color: beige;
+    margin:0px;
+    padding:10px;
+}
+
+/* .input-group-prepend span {
+    width:20px; 이건 input필드에서 이름, 가격 이 부분들 간격 동일하게 하는 css
+} */
