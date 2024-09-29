@@ -4,12 +4,11 @@ import Input from "./Input";
 import Output from "./Output";
 import Topbanner from "./Topbanner";
 import CarDetailModal from "./CarDetailModal";
-import CarModifyModal from './CarModiftModal';
+import CarModifyModal from './CarModifyModal';
 
 
 
 const App = () => {
-
     const carArrr = [
         { no: 1, name: "페라리", price: 2500, company: "현대", year: 2024 },
         { no: 2, name: "롤스로이스", price: 2500, company: "현대", year: 2024 },
@@ -18,7 +17,7 @@ const App = () => {
     ];
     const [seqNo, setSeqNo] = useState(5);
     const [carList, setCarList] = useState(carArrr);
-    const [modalData, setModalData] =useState({no: 0, name: "##", price: 0, company: "##", year: 0});
+    const [modalData, setModalData] =useState({_id:-1, name:"#!*", price:-1, company:"#!*", year:-1});
 
     const appendCarData = (newCarData) => {
         newCarData.no = seqNo;
@@ -34,15 +33,22 @@ const App = () => {
         setModalData(car);
     }
     const removeCarData = (car)=>{
-        setModalData(car);
+        console.log("removeCarData called:", car);
+        
+        const idx = carList.findIndex((item)=>item.no === car.no);
+        if(idx != -1) {
+            const newList = [...carList];
+            newList.splice(idx, 1);
+            setCarList(newList);
+        }
     }
 
     const modifyOk = (modifyCarData)=>{
-        console.log(modifyCarData);
+        console.log(">>> modifyOk:", modifyCarData);
         const idx = carList.findIndex((car)=>{
             return car.no == modifyCarData.no;
         });
-        if(idx !== -1){
+        if(idx != -1) {
             const newList = [...carList];
             newList[idx] = modifyCarData
             setCarList(newList);
@@ -55,9 +61,9 @@ const App = () => {
             <Input appendCarData={appendCarData} />
             <hr />
             <Output carList={carList} showDetail={showDetail} 
-                    modifyCarData={modifyCarData} removeCarDat={removeCarData}/>
+                    modifyCarData={modifyCarData} removeCarData={removeCarData}/>
             <CarDetailModal modalData={modalData}/>
-            <CarModifyModal modalData={modalData}/>
+            <CarModifyModal modalData={modalData} modifyOk={modifyOk}/>
 
         </div>
     )

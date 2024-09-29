@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react';
 
 const CarModifyModal = ({ modalData, modifyOk }) => {
 
-    const [carName, setName] = useState(modalData.name);
-    const [price, setPrice] = useState(modalData.price);
-    const [company, setCompany] = useState(modalData.company);
-    const [year, setYear] = useState(modalData.year);
+    const [carName, setName] = useState("");
+    const [price, setPrice] = useState(0);
+    const [company, setCompany] = useState("");
+    const [year, setYear] = useState(0);
 
-    // function initData() {
-    //     setName(modalData.name);
-    //     setPrice(modalData.price);
-    // }
-    // // useEffect()
-    // setName(modalData.name);
-    // setPrice(modalData.price);
-    // console.log(carName, price, company, year);
+    // useEffect 훅을 이용해서 상태 변경 확인
+    useEffect(() => {
+        console.log("특정 상태나 props가 변경되었습니다.");
+        setName(modalData.name);
+        setPrice(modalData.price);
+        setCompany(modalData.company);
+        setYear(modalData.year);
+    }, [modalData]);
+
     return (
         <>
             {/* <!-- The Modal --> */}
@@ -25,42 +26,42 @@ const CarModifyModal = ({ modalData, modifyOk }) => {
                         {/* <!-- Modal Header --> */}
                         <div className="modal-header">
                             <h4 className="modal-title">정보 수정</h4>
-                            <button type="button" className="close" data-dismiss="modal"></button>
+                            <button type="button" className="close" data-dismiss="modal">x</button>
                         </div>
 
                         {/* <!-- Modal body --> */}
                         <div className="modal-body">
                             <table>
+                            <tbody>
                                 <tr>
                                     <th>no</th>
                                     <td>{modalData.no}</td>
                                 </tr>
                                 <tr>
                                     <th>name</th>
-                                    <td><input type="text" value={carName==""?modalData.name:carName} 
-                                               onChange={e=>{setName(e.target.value)}}/></td>
-                                </tr> <tr>
+                                    <td><input type="text" value={carName} onChange={e=>{setName(e.target.value)}} /></td>
+                                </tr> 
+                                <tr>
                                     <th>price</th>
-                                    <td><input type="text" value={price==0?modalData.price:price} 
-                                               onChange={e=>{setName(e.target.value)}}/></td>
-                                </tr> <tr>
+                                    <td><input type="text" value={price} onChange={e=>{setPrice(e.target.value)}} /></td>
+                                </tr> 
+                                <tr>
                                     <th>company</th>
-                                    <td><input type="text" value={company==""?modalData.company:company} 
-                                               onChange={e=>{setName(e.target.value)}}/></td>
-                                </tr> <tr>
+                                    <td><input type="text" value={company} onChange={e=>{setCompany(e.target.value)}} /></td>
+                                </tr> 
+                                <tr>
                                     <th>year</th>
-                                    <td><input type="text" value={year== 0?modalData.year:year} 
-                                               onChange={e=>{setName(e.target.value)}}/>
-                                               </td>
+                                    <td><input type="text" value={year} onChange={e=>{setYear(e.target.value)}} /></td>
                                 </tr>
+                            </tbody>
                             </table>
                         </div>
 
                         {/* <!-- Modal footer --> */}
                         <div className="modal-footer">
                             <button onClick={e=>{
-                                        const
-                                        modifyOk(modalData.no, carName, price, company, year)
+                                        const no = modalData.no;
+                                        modifyOk({no, name: carName, price, company, year});
                                     }} 
                                     type="button" className="btn btn-primary" data-dismiss="modal">수정완료</button>
                             <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>

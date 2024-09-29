@@ -1,12 +1,18 @@
 import CarItem from "./CarItem";
 
-const Output = ({carList, showDetail}) => {
+const Output = ({carList, showDetail, modifyCarData, removeCarData}) => {
 
     const makeRow = ()=>{
         return (
-                carList.map((car)=>{
-                    return <CarItem key={car.no} car={car} showDetail={showDetail} modifyCarData={modifyCarData} removeCarData={removeCarData}/>
-                })
+            carList.map((car)=>{
+                return <CarItem 
+                    key={car.no} 
+                    car={car}
+                    showDetail={showDetail} 
+                    modifyCarData={modifyCarData}
+                    removeCarData={removeCarData}
+                    />
+            })
         );
     }
 
@@ -20,7 +26,6 @@ const Output = ({carList, showDetail}) => {
                     <th>no</th>
                     <th>name</th>
                     <th>price</th>
-                    {/* <th>company</th> */}
                     <th>year</th>
                     <th>수정</th>
                     <th>삭제</th>
