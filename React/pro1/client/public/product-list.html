@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>중고 자동차 목록</h2>
+    <div>
+        <div>
+            <ul>
+                <li>차종: <input type="text" value="BMW" name="name" / ></li>
+                <li>가격: <input type="text" value="3400" name="price" / ></li>
+                <li>회사: <input type="text" value="BMW" name="company" / ></li>
+                <li>연식: <input type="text" value="2017" name="year" / ></li>
+            </ul>
+            <button id="saveBtn">저장</button>
+        </div>
+        <p>10년을 타도 새차 같은 느낌!</p>
+        <p><input type="text"><button>검색</button></p>
+        <table width="100%" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>PRICE</th>
+                    <th>COMPANY</th>
+                    <th>YEAR</th>
+                    <th>삭제</th>
+                    <th>수정</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function deleteBtnHandler(btn) {
+            console.log(">>> deleteBtnHandler 호출 ...", btn);
+        }  
+
+        function editBtnHandler(btn) {
+            console.log(">>> editBtnHandler 호출 ...", btn);
+        }
+
+        document.getElementById("saveBtn").onclick = function(e) {
+            console.log(">>> saveBtnHandler 호출 ...", e.target);
+        }
+        
+        const myAjax = (method, url, callback) => {
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('readystatechange', (e)=>{
+                callback(xhr);
+            });
+            //const method = "GET";
+            //const url = "http://localhost:3035/products";
+            xhr.open(method, url, true);
+            xhr.send();
+        }
+
+        myAjax("GET", "http://localhost:3035/products", (xhr)=>{
+            if(xhr.readyState === 4 && xhr.status === 200) {
+                const carList = JSON.parse(xhr.responseText.trim());
+                let html = "";
+                carList.forEach(car => {
+                    let trTemp = `<tr>
+                        <td>${car.id}</td>
+                        <td>${car.name}</td>
+                        <td>${car.price}</td>
+                        <td>${car.company}</td>
+                        <td>${car.year}</td>
+                        <td><button onclick="deleteBtnHandler(this)">삭제</button></td>
+                        <td><button onclick="editBtnHandler(this)">수정</button></td>
+                    </tr>`;
+                    html += trTemp;
+                });
+                document.getElementById('tbody').innerHTML = html;
+            }
+        });
+    </script>
+</body>
+</html>
