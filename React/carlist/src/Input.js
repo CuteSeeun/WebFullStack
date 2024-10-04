@@ -18,26 +18,26 @@ const Input = ({appendCarData}) => {
                 <div className="input-group-prepend">
                     <span className="input-group-text">이름</span>
                 </div>
-                <input type="text" class="form-control" value={name} onChange={e=>{setName(e.target.value);}}/>
+                <input type="text" className="form-control" value={name} onChange={e=>{setName(e.target.value);}}/>
             </div>
 
             <div className="input-group mb-0 input-group-lg">
                 <div className="input-group-prepend">
                     <span className="input-group-text">가격</span>
                 </div>
-                <input type="number" class="form-control" value={price} onChange={e=>{setPrice(e.target.value);}}/>
+                <input type="number" className="form-control" value={price} onChange={e=>{setPrice(e.target.value);}}/>
             </div>
             <div className="input-group mb-0 input-group-lg">
                 <div className="input-group-prepend">
                     <span className="input-group-text">회사</span>
                 </div>
-                <input type="text" class="form-control" value={company} onChange={e=>{setCompany(e.target.value);}}/>
+                <input type="text" className="form-control" value={company} onChange={e=>{setCompany(e.target.value);}}/>
             </div>
             <div className="input-group mb-0 input-group-lg">
                 <div className="input-group-prepend">
                     <span className="input-group-text">연도</span>
                 </div>
-                <input type="text" class="form-control" value={year} onChange={e=>setYear(e.target.value)} />
+                <input type="text" className="form-control" value={year} onChange={e=>setYear(e.target.value)} />
             </div>
             <div className="input-group mb-0 input-group-lg">
                 <button onClick={e=>{ const newCarData = {name, price, company, year}; appendCarData(newCarData);}} 
