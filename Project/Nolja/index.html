@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yanolja Clone</title>
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <!-- 햄버거 아이콘 -->
+        <div class="hamburger" onclick="openMenu()">
+            &#9776; <!-- 세 줄 햄버거 모양 -->
+        </div>
+        <!-- 슬라이드 네비게이션 메뉴 -->
+        <nav id="side-menu" class="side-menu">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a> <!-- X 버튼 -->
+            <ul>
+                <li><a href="#">홈</a></li>
+                <li><a href="#">숙소</a></li>
+                <li><a href="#">액티비티</a></li>
+                <li><a href="#">할인</a></li>
+            </ul>
+        </nav>
+        <div class="user-options">
+            <a href="#">로그인</a>
+            <a href="#">회원가입</a>
+        </div>
+    </header>
+
+    <!-- Main Banner Section -->
+    <section class="banner">
+        <img src="./assets/banner.jpg" alt="Main Banner">
+        <h1>여행의 모든 것, 야놀자</h1>
+        <p>여행, 숙소, 액티비티를 한번에!</p>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content">
+        <div class="content-item">
+            <img src="./assets/hotel.png" alt="호텔">
+            <h2>호텔</h2>
+            <p>최고의 호텔을 예약하세요</p>
+        </div>
+        <div class="content-item">
+            <img src="./assets/activity.png" alt="액티비티">
+            <h2>액티비티</h2>
+            <p>다양한 액티비티를 즐기세요</p>
+        </div>
+        <!-- 더 많은 콘텐츠 카드 추가 -->
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2024 Nolja. All rights reserved.</p>
+    </footer>
+    <!-- 고정된 하단 네비게이션 바 -->
+    <nav class="bottom-nav">
+        <ul>
+            <li><a href="#">지역</a></li>
+            <li><a href="#">내주변</a></li>
+            <li><a href="#">찜</a></li>
+            <li><a href="#">마이</a></li>
+        </ul>
+    </nav>
+
+    <!-- 자바스크립트 -->
+    <script>
+        // 메뉴 열기 함수
+        function openMenu() {
+            document.getElementById("side-menu").style.width = "300px";
+        }
+
+        // 메뉴 닫기 함수
+        function closeMenu() {
+            document.getElementById("side-menu").style.width = "0";
+        }
+    </script>
+</body>
+</html>
