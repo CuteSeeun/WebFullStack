@@ -9,7 +9,7 @@
         font-family: 'Arial', sans-serif;
         /* line-height: 1.6; */
         margin: 0;
-    padding: 0;
+        padding: 0;
     }
 
     header {
@@ -19,15 +19,13 @@
         padding: 20px;
         background-color: #ff3366; */
         display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: white;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background-color: white;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     }
-    .logo img {
-        width: 100px;
-    }
+
     .hamburger {
         font-size: 30px;
         cursor: pointer;
@@ -35,15 +33,17 @@
 
     .user-options {
         display: flex;
-        gap: 5px; /* 로그인, 회원가입 사이의 간격을 10px로 설정 */
+        gap: 5px;
+        /* 로그인, 회원가입 사이의 간격을 10px로 설정 */
     }
-    
+
     .user-options a {
         text-decoration: none;
         font-size: 13px;
         /* color: black; */
     }
-    
+
+    /*  side-menu  */
     /* 슬라이드 네비게이션 메뉴 */
     .side-menu {
         height: 100%;
@@ -56,20 +56,35 @@
         transition: 0.3s;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
     }
-    
+
     .side-menu a {
         padding: 10px 15px;
-        text-decoration: none;
-        font-size: 20px;
-        color: #333;
         display: block;
-        transition: 0.3s;
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        transition: background 0.3s;
     }
-    
+
     .side-menu a:hover {
         background-color: #f1f1f1;
     }
-    
+
+    /* 열렸을 때 슬라이드 메뉴 스타일 */
+    .side-menu ul {
+        padding: 50;
+        margin: 0;
+        list-style: none;
+        /* flex-direction: column;  */
+    }
+
+    /* 서브메뉴가 있는 li:hover 시 서브메뉴 보여주기 */
+    .side-menu li:hover{
+        display: block;
+        padding-top: 10px;
+    }
+
+
     .closebtn {
         position: absolute;
         top: 0;
@@ -77,16 +92,68 @@
         font-size: 36px;
         margin-left: 50px;
     }
-    
-    /* 열렸을 때 슬라이드 메뉴 스타일 */
-    .side-menu ul {
-        padding: 20px;
-        list-style: none;
-        flex-direction: column; /* 세로로 나열 */
+
+    /* MENU */
+    /* 메뉴 항목을 flex로 배치 */
+    .menu {
+        display: flex;
+        flex-wrap: wrap;
+        /* 한 줄에 두 개씩 배치되도록 설정 */
+    }
+
+    .menu li {
+        width: 50%;
+        /* 한 줄에 두 개 배치되도록 */
+        padding: 10px 0;
+        box-sizing: border-box;
+    }
+
+    /* 서브메뉴가 있는 li:hover 시 서브메뉴 보여주기 */
+    .menu li:hover .submenu {
+        display: block;
+        padding-top: 10px;
+    }
+
+    .menu a {
+        padding: 10px 15px;
+        display: block;
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        transition: background 0.3s;
+    }
+
+    .menu a:hover {
+        background-color: #f1f1f1;
+    }
+
+
+
+
+    /* 서브메뉴 숨기기 */
+    .submenu {
+        display: none;
+        padding-left: 20px;
+    }
+
+    .submenu li {
+        padding: 5px 0;
+    }
+
+    .submenu li a {
+        font-size: 16px;
+        padding: 10px 15px;
+        color: #666;
+    }
+
+    .submenu li a:hover {
+        color: #000;
+        background-color: #e0e0e0;
     }
 
     .side-menu ul li {
-        margin-bottom: 15px; /* 각 메뉴 항목 간격 추가 */
+        margin-bottom: 15px;
+        /* 각 메뉴 항목 간격 추가 */
     }
 
     /* header .logo img {
@@ -128,14 +195,17 @@
         width: 100%;
         height: auto;
     } */
-    
+
     .content {
-        flex-direction: column; /* 세로로 배치 */
-        align-items: center; /* 중앙 정렬 */
+        flex-direction: column;
+        /* 세로로 배치 */
+        align-items: center;
+        /* 중앙 정렬 */
     }
 
     .content-item {
-        width: 60%; /* 작은 화면에서는 콘텐츠 아이템의 너비를 조정 */
+        width: 60%;
+        /* 작은 화면에서는 콘텐츠 아이템의 너비를 조정 */
     }
 
     footer {
