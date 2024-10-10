@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sales</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 스타일 정의 시작 */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sales-main {
+            display: flex;
+            width: 100%;
+            padding: 20px;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .sales-banner {
+            width: 250px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sales-banner label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .sales-banner select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .sales-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            width: calc(100% - 300px);
+        }
+
+        .sales-top span {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .sales-top select {
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .car-list {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .car-list ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .car-list li {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .car-list li:hover {
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.6);
+            cursor: pointer;
+        }
+
+        .car-list img {
+            width: 100%;
+            height: 160px;
+            display: block;
+        }
+
+        .car-list p {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .car-list p.price {
+            color: #0070c0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .car-list p.sub-price {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 10px 15px;
+            margin: 0 5px;
+            background-color: gray;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button:hover {
+            background-color: darkgray;
+        }
+
+        .pagination button.active {
+            background-color: #007bff;
+            font-weight: bold;
+        }
+
+        .zim-btn {
+            background: none;
+            font-size: 25px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sales-main">
+        <div class="sales-banner">
+            <div>
+                <label>제조사:
+                    <select>
+                        <option value="전체">전체</option>
+                        <option value="기아">기아</option>
+                        <option value="현대">현대</option>
+                        <option value="쉐보레">쉐보레</option>
+                        <option value="르노">르노</option>
+                        <option value="벤츠">벤츠</option>
+                        <option value="BMW">BMW</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>모델:
+                    <select>
+                        <option value="전체">전체</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>연식:
+                    <select>
+                        <option value="전체">전체</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>가격대:
+                    <select>
+                        <option value="전체">전체</option>
+                        <option value="2000-3000">2천만원 - 3천만원</option>
+                        <option value="3000-4000">3천만원 - 4천만원</option>
+                        <option value="9999-999999">억대</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>연료:
+                    <select>
+                        <option value="전체">전체</option>
+                        <option value="가솔린">가솔린</option>
+                        <option value="디젤">디젤</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <div class="car-list">
+            <div class="sales-top">
+                <span>전체 200대</span>
+                <select>
+                    <option value="최신순">최신순</option>
+                    <option value="저가순">저가순</option>
+                    <option value="고가순">고가순</option>
+                </select>
+            </div>
+            <ul>
+                <li>
+                    <div class="img">
+                        <img src="/src/assets/images/car.jpg" alt="Car Image">
+                    </div>
+                    <p class="car-name">그랜저</p>
+                    <p>2022년식</p>
+                    <p>가솔린 <span>5000km</span></p>
+                    <p class="price">5억</p>
+                    <p class="sub-price">(월 1,042만원)</p>
+                    <button class="zim-btn">♡</button>
+                </li>
+                <li>
+                    <div class="img">
+                        <img src="/src/assets/images/car.jpg" alt="Car Image">
+                    </div>
+                    <p class="car-name">그랜저</p>
+                    <p>2022년식</p>
+                    <p>가솔린 <span>5000km</span></p>
+                    <p class="price">5억</p>
+                    <p class="sub-price">(월 1,042만원)</p>
+                    <button class="zim-btn">♡</button>
+                </li>
+                <li>
+                    <div class="img">
+                        <img src="/src/assets/images/car.jpg" alt="Car Image">
+                    </div>
+                    <p class="car-name">그랜저</p>
+                    <p>2022년식</p>
+                    <p>가솔린 <span>5000km</span></p>
+                    <p class="price">5억</p>
+                    <p class="sub-price">(월 1,042만원)</p>
+                    <button class="zim-btn">♡</button>
+                </li>
+                <li>
+                    <div class="img">
+                        <img src="/src/assets/images/car.jpg" alt="Car Image">
+                    </div>
+                    <p class="car-name">그랜저</p>
+                    <p>2022년식</p>
+                    <p>가솔린 <span>5000km</span></p>
+                    <p class="price">5억</p>
+                    <p class="sub-price">(월 1,042만원)</p>
+                    <button class="zim-btn">♡</button>
+                </li>
+                <li>
+                    <div class="img">
+                        <img src="/src/assets/images/car.jpg" alt="Car Image">
+                    </div>
+                    <p class="car-name">그랜저</p>
+                    <p>2022년식</p>
+                    <p>가솔린 <span>5000km</span></p>
+                    <p class="price">5억</p>
+                    <p class="sub-price">(월 1,042만원)</p>
+                    <button class="zim-btn">♡</button>
+                </li>
+                <li>
+                    <div class="img">
+                        <img src="/src/assets/images/car.jpg" alt="Car Image">
+                    </div>
+                    <p class="car-name">그랜저</p>
+                    <p>2022년식</p>
+                    <p>가솔린 <span>5000km</span></p>
+                    <p class="price">5억</p>
+                    <p class="sub-price">(월 1,042만원)</p>
+                    <button class="zim-btn">♡</button>
+                </li>
+                <li>
+                    <div class="img">
+                        <img src="/src/assets/images/car.jpg" alt="Car Image">
+                    </div>
+                    <p class="car-name">그랜저</p>
+                    <p>2022년식</p>
+                    <p>가솔린 <span>5000km</span></p>
+                    <p class="price">5억</p>
+                    <p class="sub-price">(월 1,042만원)</p>
+                    <button class="zim-btn">♡</button>
+                </li>
+                <li>
+                    <div class="img">
+                        <img src="/src/assets/images/car.jpg" alt="Car Image">
+                    </div>
+                    <p class="car-name">그랜저</p>
+                    <p>2022년식</p>
+                    <p>가솔린 <span>5000km</span></p>
+                    <p class="price">5억</p>
+                    <p class="sub-price">(월 1,042만원)</p>
+                    <button class="zim-btn">♡</button>
+                </li>
+            </ul>
+            <div class="pagination">
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
