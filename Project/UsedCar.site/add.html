@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>차량 판매</title>
+    <title>판매 등록하기(add)</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -44,9 +44,6 @@
             min-height: 70vh;
         }
 
-
-
-
         /* form-container에 Bootstrap 카드 스타일 사용 */
         .form-container {
             max-width: 600px;
@@ -71,18 +68,6 @@
             margin-top: 10px;
         }
 
-        /* .btn-group {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-            
-        }
-
-        .btn-group button {
-            margin-left: 10px;
-        } */
-
-
         .save,
         .cancle {
             /* width: 48%; */
@@ -95,6 +80,7 @@
             margin-top: 10px;
         }
 
+        /* footer */
         footer {
             background-color: #f8f9fa;
             padding: 40px 0;
@@ -125,7 +111,9 @@
 
     <!-- 헤더 -->
     <header class="d-flex justify-content-between p-3 bg-light">
-        <a href="/" class="navbar-brand">KRCAR</a>
+        <a href="/main.html" class="navbar-brand">
+            <img src="/src/assets/icons/logo.png" alt="KRCAR" style="height: 40px;">
+        </a>
         <nav class="ms-auto">
             <a href="/login.html" class="me-3 text-decoration-none">로그인</a>
             <a href="/mypage.html" class="text-decoration-none">마이페이지</a>
@@ -155,13 +143,15 @@
 
                         <!-- 제조사 -->
                         <div class="mb-3">
-                            <label for="manufacturer" class="form-label">제조사</label>
+                            <label for="manufacturer" class="form-label">브랜드</label>
                             <select class="form-select" id="manufacturer">
-                                <option selected>제조사 선택</option>
-                                <option value="1">현대</option>
-                                <option value="2">기아</option>
-                                <option value="3">BMW</option>
-                                <option value="4">벤츠</option>
+                                <option selected>브랜드 선택</option>
+                                <option value="1">기아</option>
+                                <option value="2">현대</option>
+                                <option value="3">쉐보레</option>
+                                <option value="4">르노</option>
+                                <option value="5">벤츠</option>
+                                <option value="6">BMW</option>
                             </select>
                         </div>
 
